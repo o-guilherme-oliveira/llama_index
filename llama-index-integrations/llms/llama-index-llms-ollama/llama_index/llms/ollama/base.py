@@ -199,7 +199,13 @@ class Ollama(FunctionCallingLLM):
         """Get the token usage reported by the response."""
         try:
             prompt_tokens = raw_response["prompt_eval_count"]
+            if not prompt_tokens:
+                prompt_tokens = 0
+
             completion_tokens = raw_response["eval_count"]
+            if not completion_tokens:
+                completion_tokens = 0
+
             total_tokens = prompt_tokens + completion_tokens
         except KeyError:
             return {}
